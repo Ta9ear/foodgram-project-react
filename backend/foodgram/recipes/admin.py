@@ -10,10 +10,17 @@ class IngredientsInline(TabularInline):
 
 @register(Recipe)
 class RecipeAdmin(ModelAdmin):
+    list_display = ('author', 'name')
+    list_filter = ('author', 'name', 'tags')
     filter_horizontal = ('tags', )
     inlines = (IngredientsInline, )
 
 
-models_list = [Ingredient, Tag, ShoppingCart, Favorite]
+@register(Ingredient)
+class IngredientAdmin(ModelAdmin):
+    list_filter = ('name',)
+
+
+models_list = [Tag, ShoppingCart, Favorite]
 for model in models_list:
     site.register(model)

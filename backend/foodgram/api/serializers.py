@@ -1,3 +1,5 @@
+import re
+
 from djoser.serializers import UserCreateSerializer, UserSerializer
 from django.db import transaction
 from drf_extra_fields.fields import Base64ImageField
@@ -57,6 +59,11 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ('id', 'name', 'color', 'slug')
+
+    def validate_color(self, value):
+        if not re.fullmatch(r'^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$', value):
+            raise serializers.ValidationError('Color must be in HEX-format')
+        return value
 
 
 class RecipeSerializer(serializers.ModelSerializer):

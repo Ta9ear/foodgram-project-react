@@ -73,11 +73,15 @@ class Recipe(models.Model):
     cooking_time = models.IntegerField(
         verbose_name='Время приготовления в минутах'
     )
+    pub_date = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Дата публикации'
+    )
 
     class Meta:
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
-        ordering = ('name',)
+        ordering = ('-pub_date',)
 
     def __str__(self):
         return self.name
@@ -129,7 +133,7 @@ class ShoppingCart(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.user} добавил в список покупок {self.recipe}'
+        return f'{self.user} добавил {self.recipe} в список покупок'
 
 
 class Favorite(models.Model):

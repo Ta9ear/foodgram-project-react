@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -11,12 +12,15 @@ from api.permissions import IsAuthorOrAdminOrReadOnly
 from api.pagination import CustomPagination
 from recipes.models import (Recipe, Ingredient, Tag, Favorite,
                             ShoppingCart, RecipeIngredient)
-from users.models import CustomUser, Subscription
+from users.models import Subscription
 from api.serializers import (RecipeSerializer, CreateRecipeSerializer,
                              IngredientSerializer, TagSerializer,
                              FavoriteSerializer, SubscriptionSerializer,
                              SubscriptionRepresentationSerializer,
                              ShoppingCartSerializer)
+
+
+CustomUser = get_user_model()
 
 
 class RecipeViewSet(viewsets.ModelViewSet):

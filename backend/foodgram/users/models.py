@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-from django.contrib.auth import get_user_model
 
 
 class CustomUserManager(BaseUserManager):
@@ -58,18 +57,15 @@ class CustomUser(AbstractUser):
         return self.email
 
 
-User = get_user_model()
-
-
 class Subscription(models.Model):
     user = models.ForeignKey(
-        User,
+        CustomUser,
         related_name='follower',
         on_delete=models.CASCADE,
         verbose_name='Подписчик'
     )
     author = models.ForeignKey(
-        User,
+        CustomUser,
         related_name='author',
         on_delete=models.CASCADE,
         verbose_name='Автор'

@@ -1,8 +1,12 @@
 from django_filters import rest_framework as rest_filter
+
 from recipes.models import Recipe, Tag
 
 
 class RecipeFilter(rest_filter.FilterSet):
+    """
+    Custom filter for RecipeViewSet
+    """
     author = rest_filter.CharFilter()
     tags = rest_filter.ModelMultipleChoiceFilter(
         field_name='tags__slug',

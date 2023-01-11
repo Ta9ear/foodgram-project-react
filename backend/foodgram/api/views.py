@@ -47,6 +47,7 @@ class FavoriteShoppingCartView(views.APIView):
             return Response(
                 serializer.data, status=status.HTTP_201_CREATED
             )
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
         recipe = get_object_or_404(Recipe, id=id)
@@ -119,7 +120,7 @@ class SubscriptionView(views.APIView):
         }
         if not Subscription.objects.filter(
                 user=request.user, author__id=id
-        ).exists():
+        ).exists() and id != request.user.id:
             serializer = SubscriptionSerializer(
                 data=data,
                 context={'request': request}
@@ -129,6 +130,7 @@ class SubscriptionView(views.APIView):
             return Response(
                 serializer.data, status=status.HTTP_201_CREATED
             )
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
         author = get_object_or_404(CustomUser, id=id)

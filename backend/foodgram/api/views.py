@@ -10,6 +10,7 @@ from rest_framework import (decorators, filters, generics, permissions, status,
 from rest_framework.response import Response
 
 from api.filters import RecipeFilter
+from api.mixins import FavoriteShoppingCartView
 from api.pagination import CustomPagination
 from api.permissions import IsAuthorOrAdminOrReadOnly
 from api.serializers import (CreateRecipeSerializer, FavoriteSerializer,
@@ -20,43 +21,6 @@ from api.serializers import (CreateRecipeSerializer, FavoriteSerializer,
 from users.models import Subscription
 
 CustomUser = get_user_model()
-
-
-class FavoriteShoppingCartView(views.APIView):
-    """
-    Favorite ShoppingCart model api view: create/destroy
-    """
-    def get_model(self):
-        return self.model
-
-    def get_serializer_class(self):
-        return self.serializer_class
-
-    def post(self, request, id):
-        data = {
-            'user': request.user.id,
-            'recipe': id
-        }
-        if not self.get_model().objects.filter(
-                user=request.user,
-                recipe__id=id
-        ).exists():
-            serializer = self.get_serializer_class()(data=data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(
-                serializer.data, status=status.HTTP_201_CREATED
-            )
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, id):
-        recipe = get_object_or_404(Recipe, id=id)
-        if self.get_model().objects.filter(
-                user=request.user, recipe=recipe).exists():
-            self.get_model().objects.filter(
-                user=request.user, recipe=recipe).delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):

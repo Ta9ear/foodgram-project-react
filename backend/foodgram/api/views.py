@@ -18,6 +18,7 @@ from api.serializers import (CreateRecipeSerializer, FavoriteSerializer,
                              ShoppingCartSerializer,
                              SubscriptionRepresentationSerializer,
                              SubscriptionSerializer, TagSerializer)
+
 from users.models import Subscription
 
 CustomUser = get_user_model()

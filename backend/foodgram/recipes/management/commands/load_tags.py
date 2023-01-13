@@ -6,8 +6,14 @@ from recipes.models import Tag
 
 
 class Command(BaseCommand):
+
+    def add_arguments(self, parser):
+        parser.add_argument("--path", type=str, help="file path")
+
     def handle(self, *args, **options):
-        with open('../../data/tags.csv') as file:
+        file_path = options["path"]
+
+        with open(file_path, encoding='utf-8') as file:
             reader = csv.reader(file)
             Tag.objects.bulk_create(
                 Tag(

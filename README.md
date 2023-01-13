@@ -90,5 +90,4 @@ docker exec web python manage.py laod_ingredients --path 'recipes/data/ingredien
 Посмотреть развернутый проект можно по ссылке:
 http://51.250.87.105/
 
-
-![Deploy badge](https://github.com/Ta9ear/foodgarm-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)
+![Deploy badge](https://github.com/Ta9ear/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)

@@ -12,5 +12,5 @@ class Command(BaseCommand):
             Ingredient.objects.bulk_create(
                 Ingredient(
                     name=row[0], measurement_unit=row[1]
-                    ) for row in reader
+                ) for row in reader
             )

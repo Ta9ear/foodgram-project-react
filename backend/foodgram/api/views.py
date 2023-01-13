@@ -5,11 +5,11 @@ from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from recipes.models import (Favorite, Ingredient, Recipe, RecipeIngredient,
                             ShoppingCart, Tag)
-from rest_framework import (decorators, filters, generics, permissions, status,
+from rest_framework import (decorators, generics, permissions, status,
                             views, viewsets)
 from rest_framework.response import Response
 
-from api.filters import RecipeFilter
+from api.filters import IngredientFilter, RecipeFilter
 from api.mixins import FavoriteShoppingCartView
 from api.pagination import CustomPagination
 from api.permissions import IsAuthorOrAdminOrReadOnly
@@ -47,8 +47,8 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = IngredientSerializer
     permission_classes = [permissions.AllowAny]
     pagination_class = None
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ('name',)
+    filter_backends = (IngredientFilter,)
+    search_fields = ('^name',)
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
